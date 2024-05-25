@@ -12,7 +12,7 @@ import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from pymongo import MongoClient
 from flask import Flask, render_template, request, send_file, jsonify
-
+from train_model import MLP
 # Initialize Flask app
 app = Flask(__name__, template_folder='templates')
 
