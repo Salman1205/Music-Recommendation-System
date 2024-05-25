@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Similar Songs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Playing: {{ song_title }}</h1>
+        <audio controls autoplay>
+            <source src="{{ url_for('play_song', song_title=song_title) }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="description-container">
+            <h2>Song Metadata:</h2>
+            <p><strong>Title:</strong> {{ song_metadata.title }}</p>
+            <p><strong>Artist:</strong> {{ song_metadata.artist }}</p>
+            <p><strong>Album:</strong> {{ song_metadata.album }}</p>
+            <p><strong>Release Year:</strong> {{ song_metadata.year }}</p>
+        </div>
+        
+        <!-- Container for Lyrics -->
+        <div class="lyrics-container">
+            <h2>Lyrics:</h2>
+            <pre id="lyrics">
+                <!-- Lyrics will be displayed here -->
+            </pre>
+        </div>
+        
+        <h2>Recommended Songs:</h2>
+        <div class="recommendations">
+            {% for title in similar_songs %}
+            <button onclick="window.location.href='/find_similar?song_title={{ title }}'">{{ title }}</button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Script to load lyrics -->
+    <script>
+        // Function to load lyrics
+// Function to load lyrics
+function loadLyrics() {
+    fetch('/load_lyrics?song_title={{ song_title }}')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
+    .then(data => {
+        // Update the lyrics container with the loaded lyrics
+        document.getElementById('lyrics').innerText = data;
+    })
+    .catch(error => {
+        console.error('Error loading lyrics:', error);
+    });
+}
+
+        // Call the loadLyrics function when the page loads
+        window.onload = loadLyrics;
+    </script>
+</body>
+</html>
