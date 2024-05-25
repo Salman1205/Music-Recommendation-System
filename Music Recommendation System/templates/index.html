@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Similar Songs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Spotify(NON PTA)</h1>
+        <form action="/find_similar" method="post">
+            <label for="song_title">Enter Song Title:</label><br>
+            <input type="text" id="song_title" name="song_title"><br>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+</body>
+</html>
